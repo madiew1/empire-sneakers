@@ -1,5 +1,4 @@
 import { Container, Title, TopBar, Filters} from "@/components/shared";
-import { ProductCard } from "@/components/shared/product-card";
 import { ProductsGroupList } from "@/components/shared/products-group-list";
 
 export default function Home() {
@@ -18,103 +17,103 @@ export default function Home() {
         {/*Список товаров*/}
         <div className="flex-1">
           <div className="flex flex-col gap-16">
-            <ProductsGroupList title="Кроссовки" categoryId={1} products={[
-              {
-              id: 1,
-              name: "Nike-Cortez",
-              imageUrl: "./public/Nike=Cortez.webp",
-              price: 7990,
-              items: [{price: 7990}]
-              },
-              {
+            <ProductsGroupList title="HIT" categoryId={1} products={[
+                {
                 id: 1,
-                name: "Nike-Cortez",
+                name: "Nike-Cortez.webp",
+                imageUrl: "./public/Nike=Cortez.webp",
+                price: 7990,
+                items: [{price: 7990}]
+                },
+              {
+                id: 2,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 3,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 4,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 5,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 6,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 7,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               }
             ]}/>
-          <ProductsGroupList title="Одежда" categoryId={1} products={[
+          <ProductsGroupList title="NEW" categoryId={2} products={[
               {
               id: 1,
-              name: "Nike-Cortez",
+              name: "Nike-Cortez.webp",
               imageUrl: "./public/Nike=Cortez.webp",
               price: 7990,
               items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 2,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 3,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 4,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 5,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 6,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
               },
               {
-                id: 1,
-                name: "Nike-Cortez",
+                id: 7,
+                name: "Nike-Cortez.webp",
                 imageUrl: "./public/Nike=Cortez.webp",
                 price: 7990,
                 items: [{price: 7990}]
