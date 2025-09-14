@@ -3,12 +3,14 @@
 import React from 'react';
 import { FilterCheckbox, FilterChecboxProps } from './filter-checkbox';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import { Skeleton } from '../ui';
 
 type Item = FilterChecboxProps;
 
 interface Props {
   title: string;
   items: Item[];
+  loading?: boolean;
   className?: string;
   onChange?: (values: string[]) => void;
   defaultValue?: string[];
@@ -18,6 +20,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   title,
   items,
   className,
+  loading,
   onChange,
   defaultValue = [],
 }) => {
@@ -37,6 +40,17 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
     setSelectedValues(newValues);
     onChange?.(newValues);
   };
+
+  if (loading) {
+    return <div className={className}>
+      <p className="font-bold mb-3">{title}</p>
+      {
+        ...Array(5).fill(0).map((_, i) => (
+          <Skeleton key={i} className="h-6 mb-4 rounded-[8px]"/>
+        ))
+      }
+    </div>
+  }
 
   return (
     <div className={className}>
