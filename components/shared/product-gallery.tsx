@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function ProductGallery({ images }: { images: string[] }) {
+export function ProductGallery({ images }: { images: string[] }) {
   const safeImages = images?.length ? images : ['/placeholder.png'];
   const [active, setActive] = useState(0);
 

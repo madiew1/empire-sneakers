@@ -8,3 +8,9 @@ export {TopBar} from './top-bar';
 export {FilterCheckbox} from './filter-checkbox';
 export {Filters} from './filters';
 export {ProductImage} from './product-image';
+export {Colorways} from './color-ways';
+export {MegaMenu} from './mega-menu';
+export {ProductGallery} from './product-gallery';
+export {SizePicker} from './size-picker'
+export {CartButton} from './cart-button';
+export {CartDrawer} from './cart-drawer';

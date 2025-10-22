@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from 'next/navigation';
 import { prisma } from '@/prisma/prisma-client';
-import ProductGallery from '@/components/shared/product-gallery';
-import Colorways, { type ColorwayItem } from '@/components/shared/color-ways';
-import SizePicker, { type SizeItem } from '@/components/shared/size-picker';
-import { Container } from '@/components/shared';
-import { Button } from '@/components/ui';
+import { type ColorwayItem } from '@/components/shared/color-ways';
+import { type SizeItem } from '@/components/shared/size-picker';
+import { Container, ProductGallery, Colorways } from '@/components/shared';
+import { PurchasePanel } from './purchase-panel';
 
 /** Универсальный парсер поля images (String[], Json[], [{url}], "a|b|c", JSON-строка и т.п.) */
 function extractImages(val: any): string[] {
@@ -92,13 +91,33 @@ export default async function ProductPage({
     ? variants.filter((v: any) => (v.color?.name ?? v.colorName ?? null) === activeColor)
     : variants;
 
-  const sizes: SizeItem[] = sameColor
-    .map((v: any) => v.size?.label ?? v.size?.name ?? v.sizeLabel ?? null)
-    .filter(Boolean)
-    .reduce((acc: SizeItem[], label: string) => {
-      if (!acc.some((x) => x.label === label)) acc.push({ label, available: true });
-      return acc;
-    }, []);
+  const sizeMap = sameColor.reduce((acc: Map<string, SizeItem>, variant: any) => {
+    const label = variant.size?.label ?? variant.size?.name ?? variant.sizeLabel ?? null;
+    if (!label) return acc;
+
+    const stock = Number.isFinite(variant.stock) ? Number(variant.stock) : 0;
+    const available = stock > 0;
+    const existing = acc.get(label);
+
+    if (!existing) {
+      acc.set(label, {
+        label,
+        available,
+        variantId: variant.id ?? null,
+      });
+    } else {
+      // если есть несколько вариантов одного размера, отмечаем доступность хоть у одного
+      acc.set(label, {
+        ...existing,
+        available: existing.available || available,
+        variantId: existing.variantId ?? variant.id ?? null,
+      });
+    }
+
+    return acc;
+  }, new Map<string, SizeItem>());
+
+  const sizes: SizeItem[] = Array.from(sizeMap.values());
 
   /* ===================== ДРУГИЕ РАСЦВЕТКИ В РАМКАХ ОДНОЙ ГРУППЫ ===================== */
   // Строго фильтруем по группе. Если группы нет — не тянем весь каталог.
@@ -153,6 +172,10 @@ export default async function ProductPage({
     href: `/product/${s.id}`,
   }));
 
+  const productName = product.name ?? product.title ?? 'Product';
+  const unitPrice = Number(product.price) || 0;
+  const defaultVariantId = activeVariant?.id != null ? Number(activeVariant.id) : null;
+
   /* ===================== РЕНДЕР ===================== */
   return (
     <Container className="flex flex-col my-10">
@@ -163,10 +186,10 @@ export default async function ProductPage({
         {/* Правый блок: инфо, расцветки этой же группы и размеры */}
         <aside className="space-y-6">
           <div className="bg-red-600/90 text-white rounded-3xl p-6 ring-1 ring-white/10 shadow-xl">
-            <h1 className="text-2xl font-extrabold mb-2">{product.name ?? product.title ?? 'Product'}</h1>
-            {product.price ? (
+            <h1 className="text-2xl font-extrabold mb-2">{productName}</h1>
+            {unitPrice ? (
               <div className="text-lg font-semibold mb-4">
-                {Number(product.price).toLocaleString('ru-RU')} ₽
+                {unitPrice.toLocaleString('ru-RU')} ₽
               </div>
             ) : null}
             <p className="text-white/80 text-sm">
@@ -175,23 +198,19 @@ export default async function ProductPage({
           </div>
 
           {colorways.length > 1 && <Colorways items={colorways} />}
-          <SizePicker sizes={sizes} />
-
-          <div className="flex gap-3">
-            <Button className="flex-1 h-12 rounded-xl text-white font-semibold hover:bg-black/90 transition">
-              Добавить в корзину
-            </Button>
-            <Button className="h-12 px-5 rounded-xl text-white font-semibold hover:bg-black/90 transition">
-              В избранное
-            </Button>
-          </div>
+          <PurchasePanel
+            productId={product.id}
+            productName={productName}
+            unitPrice={unitPrice}
+            sizes={sizes}
+            defaultVariantId={defaultVariantId}
+            previewImage={images[0] ?? null}
+          />
         </aside>
       </div>
     </Container>
   );
 }
-
-
 
 
 

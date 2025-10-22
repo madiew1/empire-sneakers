@@ -1,30 +1,39 @@
 // components/shared/size-picker.tsx
 'use client';
 
-import { useState } from 'react';
+export type SizeItem = {
+  label: string;
+  available: boolean;
+  variantId: number | null;
+};
 
-export type SizeItem = { label: string; available: boolean };
+type SizePickerProps = {
+  sizes: SizeItem[];
+  selectedSize?: string | null;
+  onSelect?: (size: SizeItem) => void;
+};
 
-export default function SizePicker({ sizes }: { sizes: SizeItem[] }) {
+export function SizePicker({ sizes, selectedSize = null, onSelect }: SizePickerProps) {
   if (!sizes?.length) return null;
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [selected, setSelected] = useState<string | null>(null);
 
   return (
     <div>
       <div className="mb-2 text-sm text-black/60">Выбери размер</div>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-        {sizes.map((s) => {
-          const disabled = !s.available;
-          const isActive = selected === s.label;
+        {sizes.map((sizeOption) => {
+          const disabled = !sizeOption.available;
+          const isActive = selectedSize === sizeOption.label;
+
           return (
             <button
-              key={s.label}
+              key={sizeOption.label}
               type="button"
               disabled={disabled}
-              onClick={() => !disabled && setSelected(s.label)}
+              onClick={() => {
+                if (disabled) return;
+                onSelect?.(sizeOption);
+              }}
               className={[
                 'h-11 rounded-xl border text-sm font-medium transition',
                 disabled
@@ -34,7 +43,7 @@ export default function SizePicker({ sizes }: { sizes: SizeItem[] }) {
                   : 'border-black/20 hover:border-black',
               ].join(' ')}
             >
-              {s.label}
+              {sizeOption.label}
             </button>
           );
         })}
@@ -42,4 +51,3 @@ export default function SizePicker({ sizes }: { sizes: SizeItem[] }) {
     </div>
   );
 }
-

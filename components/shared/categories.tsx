@@ -3,7 +3,7 @@
 import React from 'react';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
-import MegaMenu from './mega-menu';
+import {MegaMenu} from './mega-menu';
 
 type TreeCategory = {
   id: number;

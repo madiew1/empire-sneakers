@@ -18,7 +18,7 @@ function slugToHref(slug: string) {
   return '/c/' + slug.split('-').join('/');
 }
 
-export default function MegaMenu({
+export function MegaMenu({
   activeSlug,
   onMouseEnter,
   onMouseLeave,

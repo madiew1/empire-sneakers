@@ -12,7 +12,7 @@ export type ColorwayItem = {
   href?: string; // ссылка на вариант/цвет
 };
 
-export default function Colorways({ items }: { items: ColorwayItem[] }) {
+export function Colorways({ items }: { items: ColorwayItem[] }) {
   const [active, setActive] = useState(items?.[0]?.id ?? null);
 
   if (!items?.length) return null;

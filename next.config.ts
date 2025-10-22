@@ -4,10 +4,11 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "static.nike.com" },
-      { protocol: "https", hostname: "images.puma.com" },
-      { protocol: "https", hostname: "assets.adidas.com" },
-      { protocol: "https", hostname: "nb.scene7.com" }, // New Balance
+      { protocol: "https", hostname: "static.nike.com", pathname: "/**" },
+      { protocol: "https", hostname: "images.puma.com", pathname: "/**" },
+      { protocol: "https", hostname: "assets.adidas.com", pathname: "/**" },
+      { protocol: "https", hostname: "nb.scene7.com", pathname: "/**" }, // New Balance
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
     ],
   },
 };
